@@ -1,0 +1,7 @@
+<table class="formularz">
+  <tr>
+    <td>Wybierz rodzaj zgłoszenia:<span>*</span> </td>
+    <td><%= select_tag 'form-type', options_for_select(@report_types), { :id => 'report-type' } %></td>
+  </tr>
+</table>
+

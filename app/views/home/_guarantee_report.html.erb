@@ -1,0 +1,76 @@
+<%= form_for @report, :validate => true, :url => { :action => 'submit_guarantee_report', :controller => 'home' }, :html => { :class => 'formularz', :id => 'report' } do |f| %>
+  <table class="formularz">
+    <tr>
+      <th>Wybierz rodzaj zgłoszenia:<span>*</span> </th>
+      <td><%= select_tag 'form-type', options_for_select(@report_types, @report_type), { :id => 'report-type' } %></td>
+    </tr>
+    <tr>
+      <th>Imię i Nazwisko:<span>*</span></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <th>Adres:<span>*</span></th>
+      <td><%= f.text_area :address, :class => 'adres' %></td>
+    </tr>
+    <tr>
+      <th>Telefon:<span>*</span></th>
+      <td><%= f.text_field :phone %></td>
+    </tr>
+    <tr>
+      <th>Email:</th>
+      <td><%= f.text_field :email %></td>
+    </tr>
+    <tr>
+      <th>Producent Sprzętu:<span>*</span></th>
+      <td>
+        <%= f.select :producer, options_for_select(@guarantee_producers) %>
+      </td>
+    </tr>
+    <tr>
+      <th>Data Zakupu:<span>*</span></th>
+      <td><%= f.text_field :purchase_date %></td>
+    </tr>
+    <tr>
+      <th>Miejsce Zakupu:<span>*</span></th>
+      <td><%= f.text_field :purchase_place %></td>
+    </tr>
+    <tr>
+      <th>Numer Dowodu Zakupu:<span>*</span></th>
+      <td><%= f.text_field :purchase_id, { :class => 'watermark', :'-data-watermark' => 'numer paragonu/faktury' }%></td>
+    </tr>
+    <tr>
+      <th>Numer Karty Gwarancyjnej:</th>
+      <td><%= f.text_field :purchase_guarantee_id , { :class => 'watermark', :'-data-watermark' => 'jeśli była wydana' }%></td>
+    </tr>
+    <tr>
+      <th>Rodzaj Wyrobu:<span>*</span></th>
+      <td><%= f.text_field :rodzaj , { :class => 'watermark', :'-data-watermark' => 'typ, nazwa' }%></td>
+    </tr>
+    <tr>
+      <th>Nr PIN wyrobu:</th>
+      <td><%= f.text_field :pin , { :class => 'watermark', :'-data-watermark' => 'dotyczy kabin' }%></td>
+    </tr>
+    <tr>
+      <th> Opis Usterki:<span>*</span></th>
+      <td><%= f.text_area :description %></td>
+    </tr>
+    <tr>
+      <th></th>
+      <td><div id="recaptcha_image"></div></td>
+    </tr>
+    <tr>
+      <th> Przepisz kod (powyżej):<span>*</span> </th>
+      <td>
+        <input type="text" name="recaptcha_response_field" id="recaptcha_response_field" autocomplete="off">
+        <% if @report.errors["recaptcha"].present? %>
+          <label for="recaptcha_response_field" class="message"><%= @report.errors["recaptcha"].first %></label>
+        <% end %>
+        <%= recaptcha_tags :ajax => true, :display => { :theme => "custom", :custom_theme_widget => 'recaptcha_widget' } %>
+      </td>
+    </tr>
+    <tr>
+      <th> </th>
+      <td > <input id="wyslij" type="submit" value="WYŚLIJ ZGŁOSZENIE" /> </td>
+    </tr>
+  </table>
+<% end %>

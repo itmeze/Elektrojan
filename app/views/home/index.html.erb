@@ -1,0 +1,41 @@
+<% content_for :left do %>
+  <span class="duze">Jestem autoryzowanym serwisantem następujących marek:</span>
+
+
+  <table class="firmy" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><%= image_tag 'kolo.jpg' %></td>
+      <td><%= image_tag 'grohe.jpg' %></td>
+      <td><%= image_tag 'artweger.jpg' %></td>
+      <td><%= image_tag 'duschy.jpg' %></td>
+      <td><%= image_tag 'excellent.jpg' %></td>
+    </tr>
+  </table>
+  <br/>
+  <span class="srednie">Potrzebujesz profesjonalnego montażu? Chciałbyś zgłosić usterkę?</span>
+
+  <a href="<%= url_for :action => 'report', :controller => 'home' %>">
+    <%= image_tag 'wypelnij-formularz-new.gif', :class=>'button', :alt => 'wypelnij formularz'  %>
+  </a>
+
+  <div class="tlo"><span class="male1"> <br/>
+      Od 1994 roku zajmuję się montażem oraz <strong>serwisem gwarancyjnym</strong> i <strong>pogwarancyjnym</strong> urządzeń łazienkowych  wiodących marek na rynku. Mam doświadczenie i wiedzę, która zapewnia szybkość i precyzję w wykrywaniu usterek oraz bezproblemową instalację. Prowadzę też sprzedaż części zamiennych (również do starszych modeli produktów). <br/>Moja działalność obejmuje obszar województwa łódzkiego.</span>
+    <span class="podpis"> ElektroJan</span>
+  </div>
+
+<% end %>
+<% content_for :right do %>
+  <%= image_tag 'zglos-reklamacje-new.jpg', :border => '0', :usemap => '#Map' %>
+  <map name="Map" id="Map">
+    <area shape="rect" coords="34,55,244,133" href="<%= url_for :action => 'report', :controller => 'home' %>" />
+  </map>
+
+  <%= image_tag 'sprzedaz-top-new.jpg', :class => 'top-space' %>
+  <div class="tlo-sprzedaz right ">
+    <span class="male1">Prowadzę również sprzedaż części zamiennych - do najnowszych a także starszych typów sprzętu łazienkowego.
+      Części do najpopularniejszych serii <br/>dostępne są zwykle od ręki.</span>
+    <br/>
+    <%= link_to '', { :action => 'order', :controller => 'home' }, { :class => 'zamow1' } %>
+  </div>
+  <%= image_tag 'sprzedaz-bottom-new.jpg' %>
+<% end %>

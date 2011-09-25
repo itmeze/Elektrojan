@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style type="text/css" media="screen">
+      .formularz th, .formularz td {
+        text-align:left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Złożenie zamówienia</h1>
+    <table class="formularz">
+      <tbody>
+        <tr>
+          <td>Imię i Nazwisko:</td>
+          <td><%= @order.name %></td>
+        </tr>
+        <tr>
+          <td>Adres:</td>
+          <td><%= @order.address %></td>
+        </tr>
+        <tr>
+          <td>Telefon:
+            <td><%= @order.phone %></td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td><%= @order.email %></td>
+          </tr>
+          <tr>
+            <td>Producent Sprzętu:</td>
+            <td>
+              <%= @order.producer %>
+            </td>
+          </tr>
+          <tr>
+            <td>Nazwa Wyrobu:</td>
+            <td><%= @order.product_name %></td>
+          </tr>
+          <tr>
+            <td>Zamawiane Części:</td>
+            <td><%= @order.order_description %></td>
+          </tr>
+        </tbody>
+      </table>
+    </body>
+  </html>

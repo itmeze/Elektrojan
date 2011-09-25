@@ -1,0 +1,83 @@
+<% content_for :left do %>
+    <span class="duze">Aby zamówić części wypełnij poniższy formularz:</span>
+    <!--<hr class="podzial"/> -->
+    <br />
+
+    <%= form_for @order, :validate => true, :url => { :action => 'submit_order', :controller => 'home' }, :html => { :class => 'formularz' } do |f| %>
+      <br />
+      <table class="formularz">
+        <tbody>
+          <tr>
+            <td>Imię i Nazwisko:<span>*</span></td>
+            <td><%= f.text_field :name %></td>
+          </tr>
+          <tr>
+            <td>Adres:<span>*</span></td>
+            <td><%= f.text_area :address, :class => 'adres' %></td>
+          </tr>
+          <tr>
+            <td>Telefon:<span>*</span></td>
+            <td><%= f.text_field :phone %></td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td><%= f.text_field :email  %></td>
+          </tr>
+          <tr>
+            <td>Producent Sprzętu:<span>*</span></td>
+            <td>
+              <%= f.select :producer, options_for_select(@producers) %>
+            </td>
+          </tr>
+         <tr>
+            <td> Podaj Nazwę Wyrobu:</td>
+            <td><%= f.text_field :product_name, { :class => 'watermark', :'-data-watermark' => 'np. kabina Albatros' } %></td>
+          </tr>
+          <tr>
+            <td> lub</td>
+          </tr>
+          <tr>
+            <td>Załącz Zdjęcia:</td>
+            <td><%= f.file_field :image1 %></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><%= f.file_field :image2 %></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><%= f.file_field :image3 %></td>
+          </tr>
+          <tr>
+            <td>Zamawiane Części:<span>*</span></td>
+            <td><%= f.text_field :order_description, { :class => 'watermark', :'-data-watermark' => 'np. 3 rolki prawe' } %></td>
+          </tr>
+          <tr>
+            <td>(ilość, rodzaj)</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div id="recaptcha_image"></div><td>
+          </tr>
+          <tr>
+            <td> Przepisz kod z obrazka (powyżej):<span>*</span> </td>
+            <td> <input type="text" name="recaptcha_response_field" id="recaptcha_response_field" autocomplete="off">
+              <% if @order.errors["recaptcha"].present? %>
+                <label for="recaptcha_response_field" class="message"><%= @order.errors["recaptcha"].first %></label>
+              <% end %>
+              <%= recaptcha_tags :display => { :theme => "custom", :custom_theme_widget => 'recaptcha_widget' } %>
+            </td>
+          </tr>
+          <tr>
+            <td> </td>
+            <td> <input id="wyslij" type="submit" value="WYŚLIJ ZGŁOSZENIE"> </td>
+      </tr></tbody></table>
+        <% end %>
+<% end %>
+<% content_for :right do %>
+  <%= image_tag 'zglos-reklamacje-new.jpg', :border => '0', :usemap => '#Map' %>
+  <map name="Map" id="Map">
+    <area shape="rect" coords="31,58,245,132" href="<%= url_for :action => 'report', :controller => 'home' %>">
+  </map>
+<% end %>
+

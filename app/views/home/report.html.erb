@@ -1,0 +1,22 @@
+<% content_for :left do %>
+  <span class="duze">W celu zgłoszenia usterki wypełnij poniższy formularz:</span>
+  <br/>
+  <div id="report-form">
+  <% if @report_type %>
+    <%= render 'guarantee_report' %>
+  <% else %>
+    <%= render 'post_guarantee_report' %>
+  <% end  %>
+  </div>
+<% end %>
+<% content_for :right do %>
+  <%= image_tag 'sprzedaz-top-new.jpg' %>
+  <div class="tlo-sprzedaz right ">
+    <span class="male1">Prowadzę również sprzedaż części zamiennych - do najnowszych a także starszych typów sprzętu łazienkowego.
+      Części do najpopularniejszych serii <br/>dostępne są zwykle od ręki.</span>
+    <br/>
+    <%= link_to '', { :action => 'order', :controller => 'home' }, { :class => 'zamow1' } %>
+  </div>
+  <%= image_tag 'sprzedaz-bottom-new.jpg' %>
+
+<% end %>

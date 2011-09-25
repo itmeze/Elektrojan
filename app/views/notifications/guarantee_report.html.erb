@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style type="text/css" media="screen">
+      .formularz th, .formularz td {
+        text-align:left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Zgłoszenie gwarancyjne</h1>
+    <table class="formularz">
+      <tr>
+        <th>Imię i Nazwisko:</th>
+        <td><%= @report.name %></td>
+      </tr>
+      <tr>
+        <th>Adres:</th>
+        <td><%= @report.address %></td>
+      </tr>
+      <tr>
+        <th>Telefon:</th>
+        <td><%= @report.phone %></td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td><%= @report.email %></td>
+      </tr>
+      <tr>
+        <th>Producent Sprzętu:</th>
+        <td>
+          <%= @report.producer %>
+        </td>
+      </tr>
+      <tr>
+        <th>Data Zakupu:</th>
+        <td><%= @report.purchase_date %></td>
+      </tr>
+      <tr>
+        <th>Miejsce Zakupu:</th>
+        <td><%= @report.purchase_place %></td>
+      </tr>
+      <tr>
+        <th>Numer Dowodu Zakupu:</th>
+        <td><%= @report.purchase_id %></td>
+      </tr>
+      <tr>
+        <th>Numer Karty Gwarancyjnej:</th>
+        <td><%= @report.purchase_guarantee_id %></td>
+      </tr>
+      <tr>
+        <th>Rodzaj Wyrobu:</th>
+        <td><%= @report.rodzaj %></td>
+      </tr>
+      <tr>
+        <th>Nr PIN wyrobu:</th>
+        <td><%= @report.pin %></td>
+      </tr>
+      <tr>
+        <th> Opis Usterki:</th>
+        <td><%= @report.description %></td>
+      </tr>
+    </table>
+  </body>
+</html>

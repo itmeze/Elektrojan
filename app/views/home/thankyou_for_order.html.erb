@@ -1,0 +1,22 @@
+<% content_for :left do %>
+  <span class="duze">Dziękuję za złożenie zamówienia. <br/>
+  </span>
+  <p> Dołożę wszelkich starań by było ono zrealizowane w  możliwie najkrótszym terminie.</p>
+  <%= link_to '', :root, { :class => 'wroc' } %>
+  <br/>
+  <% end %>
+  <% content_for :right do %>
+    <%= image_tag 'zglos-reklamacje-new.jpg', :border => "0", :usemap => "#Map" %>
+  <map name="Map" id="Map">
+    <area shape="rect" coords="34,55,244,133" href="<%= url_for :action => 'report', :controller => 'home' %>" />
+  </map>
+
+  <%= image_tag 'sprzedaz-top-new.jpg', :class => 'top-space' %>
+  <div class="tlo-sprzedaz right ">
+    <span class="male1">Prowadzę również sprzedaż części zamiennych - do najnowszych a także starszych typów sprzętu łazienkowego.
+      Częsci do najpopularniejszych serii <br/>dostępne są zwykle od ręki.</span>
+    <br/>
+    <%= link_to '', { :action => 'order', :controller => 'home' }, { :class => 'zamow1' } %>
+  </div>
+  <%= image_tag 'sprzedaz-bottom-new.jpg' %>
+<% end %>

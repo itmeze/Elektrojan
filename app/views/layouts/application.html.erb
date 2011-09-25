@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= stylesheet_link_tag "application" %>
+    <title>ElektroJan - Autoryzowany Serwis Urządzeń Łazienkowych</title>
+  </head>
+
+  <body>
+    <div class="main">
+      <div class="wewnetrzna">
+
+        <div class="logo clearfix left" >
+          <a href="/">
+            <%= image_tag 'logo.jpg' , :width => 304, :height => '52', :alt => 'Elektrojan logo...' %>
+          </a>
+          <div class="telefony right" >
+            <span class="male">+48</span><span class="duze"> &shy;505199242</span><br/>
+            <span class="male"> +48 </span> 42 6552000
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="blueline">
+          <div class="info left " >
+            Zakład Usługowo-Handlowy <span class="lowercase">“ElektroJan”</span> Jan Arabucki
+          </div>
+
+          <div class="info1 right">
+            <a href="mailto:arabucki@elektrojan.pl" > arabucki@elektrojan.pl</a>
+
+          </div>
+          <div class="info1 right">
+            <a href="mailto:arabucki@elektrojan.pl" ><%= image_tag 'envelope.jpg' %></a>
+          </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="banner">
+          <% image_tag 'banner-new.jpg', :width => "900", :height => "174", :alt=>"Autoryzowany Serwis Urządzen Łazienkowych" %>
+        </div>
+        <div class="tresc-lewa left">
+          <%= yield :left %>
+        </div>
+        <div class="tresc-prawa right ">
+          <%= yield :right %>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="srodki-pielegnacyjne" >
+          <span class="uppercase">Sprzedaż Środków Pielęgnacyjnych do kabin, wanien i baterii:</span> <a class="bottom" href="mailto:arabucki@elektrojan.pl" > arabucki@elektrojan.pl </a><span class="color">|</span> +48 &shy;505199242</div>
+      </div>
+    </div>
+    <%= javascript_include_tag "application" %>
+    <%= yield :scripts %>
+  </body>
+</html>

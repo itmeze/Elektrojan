@@ -1,0 +1,174 @@
+@charset "utf-8";
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	display: block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+/* CSS Document */
+body { background-color:#666; font-family:Arial, Helvetica, sans-serif; color:#999}
+div.main {background-color:#FFFFFF; width:1000px; margin:auto; padding-top:30px}
+div.wewnetrzna {width:900px; padding-bottom:40px; margin: 0px 50px }
+div.main1 {background-color:#FFFFFF; width:1000px; height:950px; margin:auto; padding-top:30px}
+div.wewnetrzna1 {width:900px;  height:880px;  margin-left:50px; margin-right:50px; margin-bottom:40px}
+/*div.main2 {background-color:#FFFFFF; width:1000px; height:870px; margin:auto; padding-top:30px}
+div.wewnetrzna2 {width:900px;  height:800px;  margin-left:50px; margin-right:50px; margin-bottom:40px}
+*/
+div.logo {width:900px; height:52px; }
+div.telefony {  text-align:right; font-size:17px; margin-top:8px; letter-spacing:120%; }
+div.blueline{background-color:#567ff6; width:888px; height:23px; margin-top:4px; padding:6px;}
+div.banner {padding-top:6px; margin:auto;}
+div.info {text-transform:uppercase; color:#FFF; line-height:24px; font-size:15px}
+div.info1 { color:#FFF;line-height:23px}
+div.logo img { float:left;}
+div.tresc-lewa {width:608px; text-align:center; padding-top:24px}
+div.tresc-prawa { padding-top:16px; width:278px;}
+div.tlo{ background-color:#ffffff; text-align:justify; padding-left:16px; padding-right:16px; padding-top:6px; padding-bottom:6px; line-height:130%}
+div.tlo-sprzedaz{ background-color:#eff1fe; text-align:center; padding:0px; line-height:100%; width:278px; margin:0px}
+div.srodki-pielegnacyjne
+{text-align:center; width:900px; border:dashed; border-width:0px; border-top-width:1px; border-bottom-width:1px; border-color:#CCC; margin-top:14px; padding-top:8px;  padding-bottom:6px; }
+.left { float:left}
+.right {float:right}
+table.firmy {margin-top:12px}
+img.button {margin-top:16px}
+img.top-space {margin-top:9px}
+a {text-decoration:none;  }
+a:link {color:#FFF;}      /* unvisited link */
+a:visited {color:#FFF;}  /* visited link */
+a:hover { color:#e9ebf8; }  /* mouse over link */
+a:active {color:#e9ebf8;}  /* selected link */
+a img { border:none; text-decoration:none;  }
+a.bottom { color:#999}
+span.male1 {font-size:14px}
+span.male {font-size:15px}
+span.duze {font-size:19px}
+span.duze2 {font-size:19px; background-color:#f1f5ff; padding-left:22px; padding-right:22px; padding-top:2px; padding-bottom:2px}
+span.srednie {font-size:18px}
+span.podpis {font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-style:italic; color:#2d59d7; text-align:right; display:block}
+span.uppercase {text-transform:uppercase; color:#567ff6; font-weight:bold}
+span.color{ color:#567ff6; margin-left:5px; margin-right:5px}
+span.lowercase {text-transform:none }
+span.space {margin-right:10px;}
+a.zamow1 {
+        background-image: url(<%= asset_path 'zamow-btn.jpg' %>);
+	width: 189px;
+	height: 36px;
+	display: block;
+	margin:auto;
+	margin-top:10px;
+	/*background-repeat: no-repeat;
+	background-position: center;
+	margin-top:10px; */
+}
+a.zamow1:hover {
+	background-position: 0px 36px
+}
+a.wroc {
+  background-image: url(<%= asset_path 'wroc-btn.jpg' %>);
+	background-position: 0px 0px;
+	width: 256px;
+	height: 35px;
+	display: block;
+	margin:auto;
+	/*background-repeat: no-repeat;
+	background-position: center;
+	margin-top:10px; */
+
+}
+a.wroc:hover { background-position: 0px 35px
+}
+table.formularz {margin:auto; text-align:left; margin-top:10px;}
+table.formularz th, table.formularz td { font-weight:normal; }
+input {width:300px}
+input.wybor {width:auto;}
+table.formularz span {color:#F00; font-size:18px}
+form.formularz { border:dashed; border-width:0px; border-top-width:1px; border-top-color:#CCC; margin:auto; margin-top:10px; width:550px; }
+hr.podzial { width:80%; color:#f1f5ff; size:80%; }
+textarea {width:300px; height:70px}
+#wyslij { width:300px; margin-top:10px; height:30px; text-align:center; font-size:16px; font-family:Tahoma, Geneva, sans-serif;  }
+label.message { font-size: 80%; color: #FF0000; display: block }
+#report-form {
+  border: dashed;
+  /*border-width:1px 0px 0px 0px; */
+  /*border-top-width: 1px; */
+  border:none;
+  border-top-color: #CCC;
+  margin: auto;
+  margin-top: 10px;
+  width: 550px;
+}
+input, textarea, select {
+  font-family: Arial;
+}
+input::-webkit-input-placeholder, input:-moz-placeholder {
+   color: #f00;
+   font-style: italic;
+ }
+table.admin{margin:auto; padding:1px; border:solid; border-width:1px; border-color:#CCC}
+table.admin th {background-color:#567ff6; width:200px; text-align:center; color:#FFF; font-size:14px; font-weight:normal; padding:2px }
+table.admin th.male {width:100px}
+table.admin td {text-align:center; border:solid; border-width:1px;border-color:#CCC }
+tr.parzysty {background-color:#EFF1FE}
+input.szukaj {width:200px}
+input.data {width:150px}
+div.inline{ height:30px; margin-top:4px; padding:6px;}
+img.search {width:24px; height:24px; padding-right:6px}
+a.details {
+    background-image: url(<%= asset_path 'view-details-icons.png' %>);
+    background-position: 0px 0px;
+    width: 32px;
+    height: 30px;
+    display: block;
+    margin:auto;
+}
+a.details:hover { background-position: 32px 0px }
+a.remove {
+    background-image: url(<%= asset_path 'remove-icons.png' %>);
+    background-position: 0px 0px;
+    width: 23px;
+    height: 24px;
+    display: block;
+    margin:auto;
+}
+a.remove:hover { background-position: 23px 0px }
+a.edytuj {
+    background-image: url('<%= asset_path 'edytuj-zgloszenie.jpg' %>');
+    background-position: 0px 0px;
+    width: 186px;
+    height: 35px;
+    display: block;
+    margin:auto;
+}
+a.edytuj:hover { background-position: 0px 35px }
+a.wroc-ogolny {
+    background-image: url('<%= asset_path 'arrow.jpg' %>');
+    background-position: 0px 0px;
+    width: 32px;
+    height: 31px;
+    display: block;
+    margin:auto;
+}
+a.wroc-ogolny:hover { background-position: 0px 31px }
+table.szczegoly {margin:auto; float:left; padding:10px; text-align:left}
+div.szczegoly{border:solid; border-width:0px; border-top-width:1px; border-color:#CCC; margin-top:10px}
+table.szczegoly th {font-size:22px; padding-bottom:16px; }
+table.szczegoly td {padding:8px }
+table.szczegoly td.bold {background-color:#EFF1FE; }
+table.szczegoly td.bold1 { background-color:#EFF1FE; font-weight:bold; color:#567ff6}
+div.opis {width:550px}
+img.mini{height:70px}
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style type="text/css" media="screen">
+      .formularz th, .formularz td {
+        text-align:left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Zgłoszenie pogwarancyjne</h1>
+    <table class="formularz">
+      <tr>
+        <th>Imię i Nazwisko:</th>
+        <td><%= @report.name %></td>
+      </tr>
+      <tr>
+        <th>Adres:</th>
+        <td><%= @report.address %></td>
+      </tr>
+      <tr>
+        <th>Telefon:</th>
+        <td><%= @report.phone %></td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td><%= @report.email %></td>
+      </tr>
+      <tr>
+        <th>Producent Sprzętu:</th>
+        <td><%= @report.producer %></td>
+      </tr>
+      <tr>
+        <th>Rodzaj Wyrobu:</th>
+        <td><%= @report.rodzaj %></td>
+      </tr>
+      <tr>
+        <th> Opis Usterki:</th>
+        <td><%= @report.description %></td>
+      </tr>
+    </table>
+  </body>
+</html>
