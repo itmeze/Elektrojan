@@ -6,3 +6,4 @@ tmp/
 *~
 *.swp
 config/environments/production.rb
+config/initializers/secret_token.rb
