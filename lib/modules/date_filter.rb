@@ -1,8 +1,7 @@
 require 'components/safe_date_parser'
 
 module DateFilter
-  #change to module in the future
-  #
+
   def self.included(base)
     base.class_eval do
       scope :before, lambda { |dt|
