@@ -1,8 +1,8 @@
 class SafeDateParser
   attr_accessor :accepted_formats
 
-  def initialize(formats)
-    if formats.present? && formats.respond_to?(:each)
+  def initialize(formats = nil)
+    unless formats.nil? || !formats.respond_to?(:each)
       @accepted_formats = formats
     else
       @accepted_formats = ['%d/%m/%Y', '%d.%m.%Y']

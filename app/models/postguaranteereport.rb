@@ -1,5 +1,9 @@
 #encoding: utf-8
+
+require 'modules/date_filter'
+
 class Postguaranteereport < ActiveRecord::Base
+  include DateFilter
   mount_uploader :image1, AttachmentUploader
   mount_uploader :image2, AttachmentUploader
   mount_uploader :image3, AttachmentUploader
@@ -24,18 +28,5 @@ class Postguaranteereport < ActiveRecord::Base
       search = "%#{q}%"
       where('name like ? or address like ? or phone like ? or email like ? or producer like ? or description like ? or rodzaj like ?', search, search, search, search, search, search, search)
     }
-
-  scope :before, lambda { |dt|
-    return unless dt.present?
-
-    where('created_at < ?', Date.strptime(dt, '%d/%m/%Y'))
-  }
-
-  scope :after, lambda { |dt|
-    return unless dt.present?
-
-    where('created_at > ?', Date.strptime(dt, '%d/%m/%Y'))
-  }
-
 
 end

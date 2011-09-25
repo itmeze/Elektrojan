@@ -1,5 +1,9 @@
 #encoding: utf-8
+
+require 'modules/date_filter'
+
 class Guaranteereport < ActiveRecord::Base
+  include DateFilter
   validates :name, :presence => { :message => 'Pole jest wymagane' }, :length => { :maximum => 256, :message => 'Pole zbyt długie' }
   validates :address, :presence => { :message => 'Pole jest wymagane' }, :length => { :maximum => 256 }
   validates :phone, :presence => { :message => 'Pole jest wymagane' }, :length => { :maximum => 256 }
@@ -22,18 +26,5 @@ class Guaranteereport < ActiveRecord::Base
       search = "%#{q}%"
       where('name like ? or address like ? or phone like ? or email like ? or producer like ? or description like ? or purchase_place like ? or rodzaj like ? or pin like ?', search, search, search, search, search, search, search, search, search)
     }
-
-  scope :before, lambda { |dt|
-    return unless dt.present?
-
-    where('created_at < ?', Date.strptime(dt, '%d/%m/%Y'))
-  }
-
-  scope :after, lambda { |dt|
-    return unless dt.present?
-
-    where('created_at > ?', Date.strptime(dt, '%d/%m/%Y'))
-  }
-
 
 end
