@@ -38,6 +38,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'spork', '~> 0.9.0.rc'
 end
 
 group :test do
