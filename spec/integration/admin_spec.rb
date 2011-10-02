@@ -3,6 +3,12 @@ require 'spec_helper'
 require 'ruby-debug'
 
 describe 'admin page' do
+  it 'saves facotry item', :focus => true do
+    Factory(:order)
+
+    Order.all.size.should == 1
+  end
+
   it 'displays the form' do
     visit '/admin'
     page.should have_content('Wyświetl rekordy typu')
@@ -13,9 +19,9 @@ describe 'admin page' do
   end
 
   it 'shows recent results when search' do
-    8.times { Factory(:order) }
-    5.times { Factory(:report) }
-    1.times { Factory(:preport) }
+    8.times { Factory.create(:order) }
+    5.times { Factory.create(:report) }
+    1.times { Factory.create(:preport) }
 
     get '/admin/search'
 
@@ -73,7 +79,9 @@ describe 'admin page' do
     get 'admin/search?q=artweger&type=order'
 
     assigns(:elements).size.should == 2
-    assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should_not be_nil
+    assigns(:elements).find { |oe| oe.id == order1.id }.should_not be_nil
+    assigns(:elements).find { |oe| oe.id == order1.id }.should be_an(Order)
+
     assigns(:elements).find { |oe| oe.id == order2.id && oe.instance_of?(Order) }.should_not be_nil
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should be_nil
@@ -147,6 +155,6 @@ describe 'admin page' do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should_not be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should be_nil
 
-  end
+ end
 
 end

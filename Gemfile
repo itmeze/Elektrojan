@@ -35,10 +35,10 @@ group :development, :test do
   gem 'ruby-debug19'
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'guard-rspec'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'spork', '~> 0.9.0.rc'
+  gem 'spork', '> 0.9.0.rc'
+  gem 'guard-spork'
 end
 
 group :test do
