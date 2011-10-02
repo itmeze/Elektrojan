@@ -1,0 +1,20 @@
+<table class="admin">
+  <th>DATA ZGŁOSZENIA</th>
+  <th>IMIĘ i NAZWISKO</th>
+  <th>ADRES</th>
+  <th>TELEFON</th>
+  <th>PRODUCENT SPRZĘTU</th>
+  <th class="male">ZOBACZ SZCZEGÓŁY</th>
+  <th class="male">USUŃ REKORD</th>
+  <% @elements.each_with_index do |e, i| %>
+  <tr class="<%= i % 2 == 0 ? 'parzysty' : '' %>">
+    <td><%= e.created_at.strftime('%d.%m.%Y') %></td>
+    <td><%= e.name %></td>
+    <td><%= e.address %></td>
+    <td><%= e.phone %></td>
+    <td><%= e.producer %></td>
+    <td><a class="details" href="details.html"></a></td>
+    <td><a class="remove" href="remove.html"></a></td>
+  </tr>
+  <% end %>
+</table>

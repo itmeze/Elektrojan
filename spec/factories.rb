@@ -5,7 +5,7 @@ FactoryGirl.define do
     end
     address 'ciagle ten sam'
     phone 'ten same'
-    producer 'Duchy'
+    producer 'Duschy'
     product_name 'nazwa produktu - ta sama'
     order_description 'jak to desc'
     sequence :email do |n|
@@ -21,7 +21,7 @@ FactoryGirl.define do
     end
     address 'ciagle ten sam'
     phone 'ten same'
-    producer 'Duchy'
+    producer 'Duschy'
     purchase_date 'ta sama'
     purchase_place 'to samo'
     sequence :purchase_id do |n|
@@ -46,7 +46,7 @@ FactoryGirl.define do
     end
     address 'ciagle ten sam'
     phone 'ten same'
-    producer 'Duchy'
+    producer 'Duschy'
     rodzaj 'zwykly'
     description 'jak to desc'
     sequence :email do |n|

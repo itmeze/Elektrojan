@@ -1,12 +1,12 @@
 <div class="inline">
-  <%= form_tag @search, :remote => true, :action => 'search', :id => 'search' do %>
+  <%= form_tag({ :action => 'search' }, { :remote => true, :id => 'search'}) do %>
     <div class="left ">
       <table>
         <tbody>
           <tr>
             <td>Wyświetl rekordy typu:</td>
             <td>
-              <select name="rodzaj">
+              <select name="type">
                 <option value="">WSZYSTKIE</option>
                 <option value="guarantee">ZGŁOSZENIA GWARANCYJNE</option>
                 <option value="postguarantee">ZGŁOSZENIA POGWARANCYJNE</option>
@@ -32,7 +32,7 @@
     <input type="submit" value="WYŚWIETL" />
   <% end %>
 </div>
-<div class="cleafix"></div>
+<div class="clearfix"></div>
 <br/>
 <br/>
 <div id="search-response">

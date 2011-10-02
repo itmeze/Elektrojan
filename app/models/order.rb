@@ -1,8 +1,10 @@
 # encoding: utf-8
 require 'modules/date_filter'
+require 'modules/smart_search'
 
 class Order < ActiveRecord::Base
   include DateFilter
+  include SmartSearch
   mount_uploader :image1, AttachmentUploader
   mount_uploader :image2, AttachmentUploader
   mount_uploader :image3, AttachmentUploader
@@ -19,10 +21,4 @@ class Order < ActiveRecord::Base
             :presence =>  { :message => 'Pole jest wymagane' },
             :length => { :maximum => 256 }
 
-  scope :search, lambda { |q|
-    return unless q.present?
-
-    search = "%#{q}%"
-    where('name like ? or address like ? or phone like ? or email like ? or producer like ? or product_name like ? or order_description like ? ', search, search, search, search, search, search, search)
-  }
 end

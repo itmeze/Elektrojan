@@ -1,9 +1,11 @@
 #encoding: utf-8
 
 require 'modules/date_filter'
+require 'modules/smart_search'
 
 class Postguaranteereport < ActiveRecord::Base
   include DateFilter
+  include SmartSearch
   mount_uploader :image1, AttachmentUploader
   mount_uploader :image2, AttachmentUploader
   mount_uploader :image3, AttachmentUploader
@@ -21,12 +23,4 @@ class Postguaranteereport < ActiveRecord::Base
   validates :description,
             :presence =>  { :message => 'Pole jest wymagane' },
             :length => { :maximum => 256 }
-
-  scope :search, lambda { |q|
-      return unless q.present?
-
-      search = "%#{q}%"
-      where('name like ? or address like ? or phone like ? or email like ? or producer like ? or description like ? or rodzaj like ?', search, search, search, search, search, search, search)
-    }
-
 end

@@ -27,6 +27,7 @@ class AdminController < ApplicationController
 
     @elements = @elements.sort{ |a, b| b.created_at <=> a.created_at }.take(20)
 
+    render :layout => false
   end
 end
 
