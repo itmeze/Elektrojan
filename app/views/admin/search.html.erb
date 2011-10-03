@@ -13,8 +13,8 @@
     <td><%= e.address %></td>
     <td><%= e.phone %></td>
     <td><%= e.producer %></td>
-    <td><a class="details" href="details.html"></a></td>
-    <td><a class="remove" href="remove.html"></a></td>
+    <td><%= link_to '', { :action => 'details', :id => e.id, :type => e.class.to_s.downcase }, { :class => 'details' } %></td>
+    <td><%= link_to '', { :action => 'delete', :id => e.id, :type => e.class.to_s.downcase }, { :confirm => 'Czy na pewno usunąć rekord?', :class => 'remove' } %></td>
   </tr>
   <% end %>
 </table>

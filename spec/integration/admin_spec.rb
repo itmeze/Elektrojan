@@ -15,7 +15,7 @@ describe 'admin page' do
     #making sure it has a selector
     page.should have_selector('form input')
     #making sure all results are on the page
-
+    page.should have_selector("form select[name='type']")
   end
 
   it 'shows recent results when search' do
@@ -154,7 +154,32 @@ describe 'admin page' do
     assigns(:elements).find { |oe| oe.id == order2.id && oe.instance_of?(Order) }.should be_nil
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should_not be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should be_nil
+  end
 
- end
+  it 'shows message when item not found' do
+    Factory(:order, :name => 'searched artweger test', :created_at => 2.days.ago)
 
+    get '/admin/details?type=guaranteereport&id=12'
+
+    assigns(:element).should be_nil
+
+    response.body.should have_content('Nie znaleziono')
+  end
+
+  it 'displays the element wehn found' do
+    Factory(:order, :id => 12, :name => 'searched artweger test', :created_at => 2.days.ago)
+
+    get '/admin/details/12?type=order'
+    assigns(:element).should_not be_nil
+  end
+
+  it 'removes selected element' do
+    Factory(:order, :id => 12, :name => 'searched artweger test', :created_at => 2.days.ago)
+
+    Order.where(:id => 12).first.should_not be_nil
+
+    delete 'admin/delete/12?type=order'
+
+    Order.where(:id => 12).first.should be_nil
+  end
 end

@@ -1,8 +1,8 @@
+#encoding: utf-8
 class AdminController < ApplicationController
 
   def index
   end
-
 
   def search
 
@@ -29,5 +29,45 @@ class AdminController < ApplicationController
 
     render :layout => false
   end
+
+  def details
+    type = params[:type]
+    id = params[:id]
+
+    if (type == 'order')
+      @element = Order.where(:id => id).first
+    end
+
+    if (type == 'guaranteereport')
+      @element = Guaranteereport.where(:id => id).first
+    end
+
+    if (type == 'postguaranteereport')
+      @element = Postguaranteereport.where(:id => id).first
+    end
+
+  end
+
+  def delete
+    id = params[:id]
+    type = params[:type]
+
+    if (type == 'order')
+      @element = Order.where(:id => id).first
+    end
+
+    if (type == 'guaranteereport')
+      @element = Guaranteereport.where(:id => id).first
+    end
+
+    if (type == 'postguaranteereport')
+      @element = Postguaranteereport.where(:id => id).first
+    end
+
+    @element.destroy unless @element.nil?
+
+    redirect_to :action => 'index', :flash => 'Element usunięty'
+  end
+
 end
 
