@@ -166,11 +166,29 @@ describe 'admin page' do
     response.body.should have_content('Nie znaleziono')
   end
 
-  it 'displays the element wehn found' do
-    Factory(:order, :id => 12, :name => 'searched artweger test', :created_at => 2.days.ago)
+  it 'displays the element when found and shows add/edit comment form' do
+    order = Factory(:order, :id => 12, :name => 'searched artweger test', :created_at => 2.days.ago)
 
     get '/admin/details/12?type=order'
     assigns(:element).should_not be_nil
+
+    response.body.should have_content(order.name)
+    response.body.should have_selector('form')
+
+    report = Factory(:report, :id => 19, :name => 'simple guarantee report', :created_at => 1.day.ago)
+
+    get '/admin/details/19?type=guaranteereport'
+
+    assigns(:element).should_not be_nil
+    response.body.should have_content(report.name)
+
+    preport = Factory(:preport, :id => 21, :name => 'simple guarantee report', :created_at => 1.day.ago)
+
+    get '/admin/details/21?type=postguaranteereport'
+
+    assigns(:element).should_not be_nil
+    response.body.should have_content(preport.name)
+
   end
 
   it 'removes selected element' do
@@ -181,5 +199,26 @@ describe 'admin page' do
     delete 'admin/delete/12?type=order'
 
     Order.where(:id => 12).first.should be_nil
+    flash[:notice].should =~ /Komentarz usunięty/
+  end
+end
+
+describe 'comments' do
+
+  it 'edits comment for element' do
+    Factory(:report, :id => 121, :name => 'whatever', :created_at => 4.days.ago)
+
+    comment = 'this is my comment'
+    post '/admin/add_comment/121?type=guaranteereport', { :comment => comment }
+
+    content = /Komentarz dodany poprawnie/
+
+    flash[:notice].should =~ content
+    response.should redirect_to({ :action => 'details', :id => 121, :type => 'guaranteereport' })
+
+    report = Guaranteereport.where(:id => 121).first
+    report.id.should == 121
+    report.comment.should == comment
+
   end
 end

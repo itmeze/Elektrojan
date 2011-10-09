@@ -65,9 +65,33 @@ class AdminController < ApplicationController
     end
 
     @element.destroy unless @element.nil?
-
+    flash[:notice] = "Komentarz usunięty"
     redirect_to :action => 'index', :flash => 'Element usunięty'
   end
 
+  def add_comment
+    id = params[:id]
+    type = params[:type]
+    comment = params[:comment]
+
+    if (type == 'order')
+      @element = Order.where(:id => id).first
+    end
+
+    if (type == 'guaranteereport')
+      @element = Guaranteereport.where(:id => id).first
+    end
+
+    if (type == 'postguaranteereport')
+      @element = Postguaranteereport.where(:id => id).first
+    end
+
+    @element.comment = comment
+    @element.save
+
+    flash[:notice] = 'Komentarz dodany poprawnie'
+
+    redirect_to :action => 'details', :id => params[:id], :type => params['type']
+  end
 end
 

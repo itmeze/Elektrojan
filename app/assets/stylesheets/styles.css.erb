@@ -25,9 +25,7 @@ div.main {background-color:#FFFFFF; width:1000px; margin:auto; padding-top:30px}
 div.wewnetrzna {width:900px; padding-bottom:40px; margin: 0px 50px }
 div.main1 {background-color:#FFFFFF; width:1000px; height:950px; margin:auto; padding-top:30px}
 div.wewnetrzna1 {width:900px;  height:880px;  margin-left:50px; margin-right:50px; margin-bottom:40px}
-/*div.main2 {background-color:#FFFFFF; width:1000px; height:870px; margin:auto; padding-top:30px}
 div.wewnetrzna2 {width:900px;  height:800px;  margin-left:50px; margin-right:50px; margin-bottom:40px}
-*/
 div.logo {width:900px; height:52px; }
 div.telefony {  text-align:right; font-size:17px; margin-top:8px; letter-spacing:120%; }
 div.blueline{background-color:#567ff6; width:888px; height:23px; margin-top:4px; padding:6px;}
@@ -70,9 +68,6 @@ a.zamow1 {
 	display: block;
 	margin:auto;
 	margin-top:10px;
-	/*background-repeat: no-repeat;
-	background-position: center;
-	margin-top:10px; */
 }
 a.zamow1:hover {
 	background-position: 0px 36px
@@ -84,13 +79,8 @@ a.wroc {
 	height: 35px;
 	display: block;
 	margin:auto;
-	/*background-repeat: no-repeat;
-	background-position: center;
-	margin-top:10px; */
-
 }
-a.wroc:hover { background-position: 0px 35px
-}
+a.wroc:hover { background-position: 0px 35px }
 table.formularz {margin:auto; text-align:left; margin-top:10px;}
 table.formularz th, table.formularz td { font-weight:normal; }
 input {width:300px}
@@ -103,8 +93,6 @@ textarea {width:300px; height:70px}
 label.message { font-size: 80%; color: #FF0000; display: block }
 #report-form {
   border: dashed;
-  /*border-width:1px 0px 0px 0px; */
-  /*border-top-width: 1px; */
   border:none;
   border-top-color: #CCC;
   margin: auto;
@@ -146,7 +134,7 @@ a.remove {
 }
 a.remove:hover { background-position: 23px 0px }
 a.edytuj {
-    background-image: url('<%= asset_path 'edytuj-zgloszenie.jpg' %>');
+    background-image: url(<%= asset_path 'edytuj-zgloszenie.jpg' %>);
     background-position: 0px 0px;
     width: 186px;
     height: 35px;
@@ -155,7 +143,7 @@ a.edytuj {
 }
 a.edytuj:hover { background-position: 0px 35px }
 a.wroc-ogolny {
-    background-image: url('<%= asset_path 'arrow.jpg' %>');
+    background-image: url(<%= asset_path 'arrow.jpg' %>);
     background-position: 0px 0px;
     width: 32px;
     height: 31px;
@@ -163,6 +151,26 @@ a.wroc-ogolny {
     margin:auto;
 }
 a.wroc-ogolny:hover { background-position: 0px 31px }
+.zapisz {
+    background-image: url(<%= asset_path 'zapisz-zmiany.jpg' %>);
+    background-position: 0px 0px;
+    width: 142px;
+    height: 35px;
+    display: block;
+    margin:auto;
+    padding:0px;
+    border:none;
+}
+.zapisz:hover { background-position: 0px 35px }
+a.anuluj {
+    background-image: url(<%= asset_path 'odrzuc-zmiany.jpg' %>);
+    background-position: 0px 0px;
+    width: 142px;
+    height: 35px;
+    display: block;
+    margin:auto;
+}
+a.anuluj:hover { background-position: 0px 35px }
 table.szczegoly {margin:auto; float:left; padding:10px; text-align:left}
 div.szczegoly{border:solid; border-width:0px; border-top-width:1px; border-color:#CCC; margin-top:10px}
 table.szczegoly th {font-size:22px; padding-bottom:16px; }
@@ -171,4 +179,6 @@ table.szczegoly td.bold {background-color:#EFF1FE; }
 table.szczegoly td.bold1 { background-color:#EFF1FE; font-weight:bold; color:#567ff6}
 div.opis {width:550px}
 img.mini{height:70px}
-
+div.left1 {float:left; margin-left:290px}
+div.right1 {float:right; margin-right:290px}
+.notice { float: left; color: green; padding: 5px; font-weight: bold; margin-left: 85px; }

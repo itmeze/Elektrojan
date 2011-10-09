@@ -23,4 +23,10 @@ class Guaranteereport < ActiveRecord::Base
             :length => { :maximum => 256 }
 
 
+  def type_to_s
+    "Zgłoszenie grawancyjne"
+  end
+  def simple_type
+    "guaranteereport"
+  end
 end

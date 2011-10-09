@@ -1,5 +1,101 @@
 <% if @element.nil? %>
   <p>Nie znaleziono żadnego elementu</p>
 <% else %>
-  <p><%= @element.id %>
+  <div class="szczegoly"></div>
+  <%= form_tag :action => 'add_comment', :controller => 'admin', :type => @element.simple_type, :id => @element.id do %>
+    <table class="szczegoly">
+      <th colspan="2"><%= @element.type_to_s %> <%= @element.created_at.strftime '%d.%m.%Y' %></th>
+      <tr>
+        <td class="bold"> Imię i Nazwisko:</td> <td><%= @element.name %></td>
+      </tr>
+      <tr>
+        <td class="bold">Adres:</td> <td><%= @element.address %></td>
+      </tr>
+      <tr>
+        <td class="bold">Telefon:</td> <td><%= @element.phone %></td>
+      </tr>
+      <tr>
+        <td class="bold">Email:</td> <td><%= @element.email %> </td>
+      </tr>
+      <tr>
+        <td class="bold">Producent Sprzetu:</td> <td><%= @element.producer %></td>
+      </tr>
+      <% if @element.respond_to? :product_name %>
+        <tr>
+          <td class="bold">Nazwa produktu:</td><td><%= @element.product_name %></td>
+        </tr>
+      <% end %>
+      <% if @element.respond_to? :order_description %>
+        <tr>
+          <td class="bold">Opis Usterki:</td> <td><div class="opis"><%= @element.order_description %></div></td>
+        </tr>
+      <% end %>
+      <% if @element.respond_to? :description %>
+        <tr>
+          <td class="bold">Opis:</td> <td><div class="opis"><%= @element.description %></div></td>
+        </tr>
+      <% end %>
+      <% if @element.respond_to? :purchase_date %>
+        <tr>
+          <td class="bold">Data zakupu:</td> <td><%= @element.purchase_date %></td>
+        </tr>
+      <% end %>
+      <% if @element.respond_to? :purchase_place %>
+        <tr>
+          <td class="bold">Miejsce zakupu:</td> <td><%= @element.purchase_place %></td>
+        </tr>
+      <% end %>
+      <% if @element.respond_to? :purchase_id %>
+        <tr>
+          <td class="bold">Numer zakupu:</td> <td><%= @element.purchase_id %></td>
+        </tr>
+      <% end %>
+      <% if @element.respond_to? :purchase_guarantee_id %>
+        <tr>
+          <td class="bold">Numer gwarancji:</td> <td><%= @element.purchase_guarantee_id %></td>
+        </tr>
+      <% end %>
+      <% if @lement.respond_to? :rodzaj %>
+        <tr>
+          <td class="bold">Rodzaj Wyrobu:</td> <td><%= @element.rodzaj %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="bold">Załączone Zdjęcia:</td>
+        <td>
+          <% if @element.respond_to?(:image1) && @element.image1.present? %>
+            <a href="<%= @element.image1.url %>">
+              <img class="mini" src="<%= @element.image1.url %>" />
+            </a>
+          <% end %>
+          <% if @element.respond_to?(:image2) && @element.image2.present? %>
+            <a href="<%= @element.image2.url %>">
+              <img class="mini" src="<%= @element.image2.url %>" />
+            </a>
+          <% end %>
+          <% if @element.respond_to?(:image3) &&  @element.image3.present? %>
+            <a href="<%= @element.image3.url %>">
+              <img class="mini" src="<%= @element.image3.url %>" />
+            </a>
+          <% end %>
+        </tr>
+        <tr>
+          <td class="bold">Komentarz:</td>
+          <td><%= text_area_tag 'comment', @element.comment, { :class => 'komentarz'} %>
+          </td>
+        </tr>
+      </table>
+
+      <div class="clearfix"></div>
+      <div class="szczegoly"></div>
+      <div class="clearfix"></div>
+      <div class="inline">
+        <div class="left1">
+          <input type="submit" value="" class="zapisz" />
+        </div>
+      </div>
+    <% end %>
+    <div class="clearfix"></div>
+    <div class="right"><%= link_to '', { :action => 'index' }, { :class => 'wroc-ogolny' } %></a></div>
+  <div class="inline right"><%= link_to 'WRÓĆ DO LISTY', { :action => 'index' }, { :class => 'bottom' } %></div>
 <% end %>

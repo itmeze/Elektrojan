@@ -23,4 +23,11 @@ class Postguaranteereport < ActiveRecord::Base
   validates :description,
             :presence =>  { :message => 'Pole jest wymagane' },
             :length => { :maximum => 256 }
+  def type_to_s
+    "Zgłoszenie pograwancyjne"
+  end
+
+  def simple_type
+    "postguaranteereport"
+  end
 end
