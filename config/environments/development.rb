@@ -36,6 +36,9 @@ Elektrojan::Application.configure do
 
   config.after_initialize do
     MyConfiguration.mailer_to = 'XXX'
+    MyConfiguration.display_spam_hidden_field = true
+    MyConfiguration.spam_hidden_field_name = 'user_nick'
+    MyConfiguration.display_captcha = false
   end
 
 end

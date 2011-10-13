@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     @producers = ["Albatros", "Artweger", "Duschy", "Excellent", "Grohe", "Jacuzzi", "Koło", "Koralle"]
     @guarantee_producers = ["Koło", "Artweger", "Grohe"]
     @report_types = [ ["Zgłoszenie gwarancyjne", "true"], ["Zgłoszenie pogwarancyjne", "false"] ]
+    @config = MyConfiguration
   end
 
   def index
@@ -17,12 +18,13 @@ class HomeController < ApplicationController
 
   def submit_order
     @order = Order.new params[:order]
-    if verify_recaptcha(:model => @order, :message => "Niewłaściwie przepisany kod! Przepisz ponownie, pamietaj o ponownym załączeniu plików!", :attribute => 'recaptcha') && @order.save
-      logger.info 'before sending'
+
+    return render 'order' unless hidden_field_valid?
+
+    if captcha_valid? @order && @order.save
       fork do
         Notifications.order(@order).deliver
       end
-      logger.info 'after sending'
       redirect_to :action => 'thankyou_for_order'
     else
       render 'order'
@@ -37,7 +39,10 @@ class HomeController < ApplicationController
   def submit_guarantee_report
     @report = Guaranteereport.new(params[:guaranteereport])
     @report_type = true
-    if verify_recaptcha(:model => @report, :message => "Niewłaściwie przepisany kod! Przepisz ponownie, pamietaj o ponownym załączeniu plików!", :attribute => 'recaptcha') && @report.save
+
+    return render 'report' unless hidden_field_valid?
+
+    if captcha_valid? @report && @report.save
       fork do
         Notifications.guarantee_report(@report).deliver
       end
@@ -50,7 +55,9 @@ class HomeController < ApplicationController
   def submit_postguarantee_report
     @report = Postguaranteereport.new params[:postguaranteereport]
     @report_type = false
-    if verify_recaptcha(:model => @report, :message => "Niewłaściwie przepisany kod! Przepisz ponownie, pamietaj o ponownym załączeniu plików!", :attribute => 'recaptcha') && @report.save
+
+    return render 'report' unless hidden_field_valid?
+    if captcha_valid? @report && @report.save
       fork do
         Notifications.postguarantee_report(@report).deliver
       end

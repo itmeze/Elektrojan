@@ -1,0 +1,13 @@
+<tr>
+  <td></td>
+  <td><div id="recaptcha_image"></div><td>
+    </tr>
+    <tr>
+      <td> Przepisz kod z obrazka (powyżej):<span>*</span> </td>
+      <td> <input type="text" name="recaptcha_response_field" id="recaptcha_response_field" autocomplete="off">
+        <% if @order.errors["recaptcha"].present? %>
+          <label for="recaptcha_response_field" class="message"><%= @order.errors["recaptcha"].first %></label>
+        <% end %>
+        <%= recaptcha_tags :display => { :theme => "custom", :custom_theme_widget => 'recaptcha_widget' } if @config.display_captcha %>
+      </td>
+    </tr>

@@ -54,21 +54,9 @@
       <th> Opis Usterki:<span>*</span></th>
       <td><%= f.text_area :description %></td>
     </tr>
-    <tr>
-      <th></th>
-      <td><div id="recaptcha_image"></div></td>
-    </tr>
-    <tr>
-      <th> Przepisz kod (powyżej):<span>*</span> </th>
-      <td>
-        <input type="text" name="recaptcha_response_field" id="recaptcha_response_field" autocomplete="off">
-        <% if @report.errors["recaptcha"].present? %>
-          <label for="recaptcha_response_field" class="message"><%= @report.errors["recaptcha"].first %></label>
-        <% end %>
-        <%= recaptcha_tags :ajax => true, :display => { :theme => "custom", :custom_theme_widget => 'recaptcha_widget' } %>
-      </td>
-    </tr>
-    <tr>
+    <%= render 'hidden_file_protection' if @config.display_spam_hidden_field %>
+    <%= render 'captcha_row' if @config.display_captcha %>
+     <tr>
       <th> </th>
       <td > <input id="wyslij" type="submit" value="WYŚLIJ ZGŁOSZENIE" /> </td>
     </tr>
