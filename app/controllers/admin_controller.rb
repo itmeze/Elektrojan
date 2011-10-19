@@ -65,8 +65,8 @@ class AdminController < ApplicationController
     end
 
     @element.destroy unless @element.nil?
-    flash[:notice] = "Komentarz usunięty"
-    redirect_to :action => 'index', :flash => 'Element usunięty'
+    flash[:notice] = "Rekord usunięty"
+    redirect_to :action => 'index', :flash => 'Rekord usunięty'
   end
 
   def add_comment
