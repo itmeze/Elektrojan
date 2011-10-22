@@ -36,4 +36,8 @@ Elektrojan::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  config.after_initialize do
+    MyConfiguration.admin_username = 'test'
+    MyConfiguration.admin_password = 'test'
+ end
 end

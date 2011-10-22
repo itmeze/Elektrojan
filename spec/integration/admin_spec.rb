@@ -18,9 +18,7 @@ describe AdminController do
   end
 
   def valid_credentials
-    name = 'jajanek'
-    password = 'test'
-    ActionController::HttpAuthentication::Basic.encode_credentials name, password
+    ActionController::HttpAuthentication::Basic.encode_credentials MyConfiguration.admin_username, MyConfiguration.admin_password
   end
 
   before(:each) do

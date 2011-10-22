@@ -39,6 +39,8 @@ Elektrojan::Application.configure do
     MyConfiguration.display_spam_hidden_field = true
     MyConfiguration.spam_hidden_field_name = 'user_nick'
     MyConfiguration.display_captcha = false
+    MyConfiguration.admin_username = 'dev'
+    MyConfiguration.admin_password = 'dev'
   end
 
 end

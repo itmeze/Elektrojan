@@ -1,6 +1,6 @@
 #encoding: utf-8
 class AdminController < ApplicationController
-  http_basic_authenticate_with :name => 'jajanek', :password => 'test'
+  http_basic_authenticate_with :name => MyConfiguration.admin_username, :password => MyConfiguration.admin_password
 
   def index
   end
