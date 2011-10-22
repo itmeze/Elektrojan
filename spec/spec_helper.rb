@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'rack/test'
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
@@ -46,6 +47,8 @@ Spork.prefork do
     config.after(:each) do
       #DatabaseCleaner.clean
     end
+
+    #config.include Rack::Test::Methods, :type => :request
   end
 end
 

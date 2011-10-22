@@ -1,8 +1,36 @@
 #encoding: utf-8
 require 'spec_helper'
 require 'ruby-debug'
+#require 'rack/test'
 
-describe 'admin page' do
+describe AdminController do
+
+  def visit_with_credentials path
+    get path, nil, { 'HTTP_AUTHORIZATION' => valid_credentials}
+  end
+
+  def post_with_credentials(path, param_data=nil)
+    post path, param_data, { 'HTTP_AUTHORIZATION' => valid_credentials}
+  end
+
+  def delete_with_credentials path, param_data=nil
+    delete path, param_data, { 'HTTP_AUTHORIZATION' => valid_credentials}
+  end
+
+  def valid_credentials
+    name = 'jajanek'
+    password = 'test'
+    ActionController::HttpAuthentication::Basic.encode_credentials name, password
+  end
+
+  before(:each) do
+  end
+
+  it 'prevents entrance for unauthenticated user' do
+    get '/admin'
+    response.status.should == 401
+  end
+
   it 'saves facotry item', :focus => true do
     Factory(:order)
 
@@ -10,12 +38,12 @@ describe 'admin page' do
   end
 
   it 'displays the form' do
-    visit '/admin'
-    page.should have_content('Wyświetl rekordy typu')
+    visit_with_credentials '/admin'
+    response.body.should have_content('Wyświetl rekordy typu')
     #making sure it has a selector
-    page.should have_selector('form input')
+    response.body.should have_selector('form input')
     #making sure all results are on the page
-    page.should have_selector("form select[name='type']")
+    response.body.should have_selector("form select[name='type']")
   end
 
   it 'shows recent results when search' do
@@ -23,7 +51,7 @@ describe 'admin page' do
     5.times { Factory.create(:report) }
     1.times { Factory.create(:preport) }
 
-    get '/admin/search'
+    visit_with_credentials '/admin/search'
 
     Order.all.size.should == 8
     Guaranteereport.all.size.should == 5
@@ -41,7 +69,7 @@ describe 'admin page' do
       Factory(:order, :created_at => i.hours.ago)
     end
 
-    get 'admin/search'
+    visit_with_credentials 'admin/search'
 
     Order.all.size.should == 30
 
@@ -61,7 +89,7 @@ describe 'admin page' do
     order3 = Factory(:order, :order_description => 'suszarka artweger')
     order4 = Factory(:order, :order_description => 'brak firmy')
 
-    get 'admin/search?q=artweger'
+    visit_with_credentials 'admin/search?q=artweger'
 
     assigns(:elements).size.should == 3
     assigns(:elements).find { |oe| oe.id == order1.id }.should_not be_nil
@@ -76,7 +104,7 @@ describe 'admin page' do
     guarantee1 = Factory(:report, :description => 'suszarka artweger')
     pguatantee1 = Factory(:preport, :description => 'costam artweger')
 
-    get 'admin/search?q=artweger&type=order'
+    visit_with_credentials 'admin/search?q=artweger&type=order'
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id }.should_not be_nil
@@ -96,7 +124,7 @@ describe 'admin page' do
     guarantee1 = Factory(:report, :description => 'suszarka artweger', :created_at => 1.day.since)
     pguatantee1 = Factory(:preport, :description => 'costam artweger', :created_at => 3.days.since)
 
-    get "admin/search?q=artweger&from=#{current_time}"
+    visit_with_credentials "admin/search?q=artweger&from=#{current_time}"
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil
@@ -104,7 +132,7 @@ describe 'admin page' do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should_not be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should_not be_nil
 
-    get "admin/search?q=artweger&to=#{current_time}"
+    visit_with_credentials "admin/search?q=artweger&to=#{current_time}"
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should_not be_nil
@@ -112,7 +140,7 @@ describe 'admin page' do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should be_nil
 
-    get "admin/search?q=artweger&from=#{current_time}&to=#{day_after_tomorrow}"
+    visit_with_credentials "admin/search?q=artweger&from=#{current_time}&to=#{day_after_tomorrow}"
 
     assigns(:elements).size.should == 1
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil
@@ -131,7 +159,7 @@ describe 'admin page' do
     guarantee1 = Factory(:report, :description => 'suszarka artweger', :created_at => 1.day.since)
     pguatantee1 = Factory(:preport, :description => 'costam artweger', :created_at => 3.days.since)
 
-    get "admin/search?q=artweger&from=#{current_time}"
+    visit_with_credentials "admin/search?q=artweger&from=#{current_time}"
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil
@@ -139,7 +167,7 @@ describe 'admin page' do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should_not be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should_not be_nil
 
-    get "admin/search?q=artweger&to=#{current_time}"
+    visit_with_credentials "admin/search?q=artweger&to=#{current_time}"
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should_not be_nil
@@ -147,7 +175,7 @@ describe 'admin page' do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should be_nil
 
-    get "admin/search?q=artweger&from=#{current_time}&to=#{day_after_tomorrow}"
+    visit_with_credentials "admin/search?q=artweger&from=#{current_time}&to=#{day_after_tomorrow}"
 
     assigns(:elements).size.should == 1
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil
@@ -159,7 +187,7 @@ describe 'admin page' do
   it 'shows message when item not found' do
     Factory(:order, :name => 'searched artweger test', :created_at => 2.days.ago)
 
-    get '/admin/details?type=guaranteereport&id=12'
+    visit_with_credentials '/admin/details?type=guaranteereport&id=12'
 
     assigns(:element).should be_nil
 
@@ -169,7 +197,7 @@ describe 'admin page' do
   it 'displays the element when found and shows add/edit comment form' do
     order = Factory(:order, :id => 12, :name => 'searched artweger test', :created_at => 2.days.ago)
 
-    get '/admin/details/12?type=order'
+    visit_with_credentials '/admin/details/12?type=order'
     assigns(:element).should_not be_nil
 
     response.body.should have_content(order.name)
@@ -177,14 +205,14 @@ describe 'admin page' do
 
     report = Factory(:report, :id => 19, :name => 'simple guarantee report', :created_at => 1.day.ago)
 
-    get '/admin/details/19?type=guaranteereport'
+    visit_with_credentials '/admin/details/19?type=guaranteereport'
 
     assigns(:element).should_not be_nil
     response.body.should have_content(report.name)
 
     preport = Factory(:preport, :id => 21, :name => 'simple guarantee report', :created_at => 1.day.ago)
 
-    get '/admin/details/21?type=postguaranteereport'
+    visit_with_credentials '/admin/details/21?type=postguaranteereport'
 
     assigns(:element).should_not be_nil
     response.body.should have_content(preport.name)
@@ -196,20 +224,17 @@ describe 'admin page' do
 
     Order.where(:id => 12).first.should_not be_nil
 
-    delete 'admin/delete/12?type=order'
+    delete_with_credentials 'admin/delete/12?type=order'
 
     Order.where(:id => 12).first.should be_nil
-    flash[:notice].should =~ /Komentarz usunięty/
+    flash[:notice].should =~ /Rekord usunięty/
   end
-end
-
-describe 'comments' do
 
   it 'edits comment for element' do
     Factory(:report, :id => 121, :name => 'whatever', :created_at => 4.days.ago)
 
     comment = 'this is my comment'
-    post '/admin/add_comment/121?type=guaranteereport', { :comment => comment }
+    post_with_credentials '/admin/add_comment/121?type=guaranteereport', { :comment => comment }
 
     content = /Komentarz dodany poprawnie/
 

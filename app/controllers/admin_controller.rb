@@ -1,5 +1,6 @@
 #encoding: utf-8
 class AdminController < ApplicationController
+  http_basic_authenticate_with :name => 'jajanek', :password => 'test'
 
   def index
   end
@@ -65,6 +66,7 @@ class AdminController < ApplicationController
     end
 
     @element.destroy unless @element.nil?
+
     flash[:notice] = "Rekord usunięty"
     redirect_to :action => 'index', :flash => 'Rekord usunięty'
   end
