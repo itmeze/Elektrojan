@@ -1,5 +1,5 @@
 <div class="inline">
-  <%= form_for @query, :url => { :action => 'search' }, :remote => true, :id => 'search' do |f| %>
+  <%= form_for @query, :url => { :action => 'search' }, :remote => true do |f| %>
     <div class="left ">
       <table>
         <tbody>
@@ -20,15 +20,13 @@
     </div>
     <div class="clearfix"></div>
 
-    Pokaż Zgłoszenia od dnia: <%= f.text_field :from, :class => 'data watermark datepicker', :'-data-watermark' => "od dnia" %> do dnia: <%= f.text_field :to, :class => 'data watermark datepicker', :'-data-watermark' => "do dnia" %>
+    Pokaż zgłoszenia od dnia: <%= f.text_field :from, :class => 'data watermark datepicker', :'-data-watermark' => "od dnia" %> do dnia: <%= f.text_field :to, :class => 'data watermark datepicker', :'-data-watermark' => "do dnia" %>
 
     <div class="clearfix"></div>
     <input type="submit" value="WYŚWIETL" />
   <% end %>
 </div>
 <div class="clearfix"></div>
-<br/>
-<br/>
 <div id="search-response">
 
 </div>

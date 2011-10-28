@@ -11,9 +11,10 @@ jQuery ->
     -> EJ.setWatermarks()
   )
 
-  $('form#search')
+  $('form#new_search_conditions')
     .bind("ajax:success", (event, data, status, xhr) ->
       $('#search-response').html(data)
     )
   $.datepicker.setDefaults( $.datepicker.regional[ "pl" ] )
   $('.datepicker').datepicker()
+  $('form#new_search_conditions').submit()

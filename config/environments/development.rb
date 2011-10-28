@@ -29,13 +29,13 @@ Elektrojan::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :user_name            => 'XXX',
-    :password             => 'XXX',
+    :user_name            => 'michal.zygula@gmail.com',
+    :password             => 'Guatemala2012',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
 
   config.after_initialize do
-    MyConfiguration.mailer_to = 'XXX'
+    MyConfiguration.mailer_to = 'marcelina.a@gmail.com'
     MyConfiguration.display_spam_hidden_field = true
     MyConfiguration.spam_hidden_field_name = 'user_nick'
     MyConfiguration.display_captcha = false

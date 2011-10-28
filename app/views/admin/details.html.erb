@@ -1,7 +1,7 @@
 <% if @element.nil? %>
   <p>Nie znaleziono żadnego elementu</p>
 <% else %>
-  <div class="szczegoly"></div>
+ <div class="szczegoly"></div>
   <%= form_tag :action => 'add_comment', :controller => 'admin', :type => @element.simple_type, :id => @element.id do %>
     <table class="szczegoly">
       <th colspan="2"><%= @element.type_to_s %> <%= @element.created_at.strftime '%d.%m.%Y' %></th>

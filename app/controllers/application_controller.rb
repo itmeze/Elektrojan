@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def captcha_valid?(model)
-    return MyConfiguration.display_captcha || verify_recaptcha(:model => model, :message => "Niewłaściwie przepisany kod! Przepisz ponownie, pamietaj o ponownym załączeniu plików!", :attribute => 'recaptcha')
+    return true unless MyConfiguration.display_captcha
+    return verify_recaptcha(:model => model, :message => "Niewłaściwie przepisany kod! Przepisz ponownie, pamietaj o ponownym załączeniu plików!", :attribute => 'recaptcha')
   end
 end

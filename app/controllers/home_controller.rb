@@ -21,7 +21,7 @@ class HomeController < ApplicationController
 
     return render 'order' unless hidden_field_valid?
 
-    if captcha_valid? @order && @order.save
+    if captcha_valid?(@order) && @order.save
       fork do
         Notifications.order(@order).deliver
       end
@@ -42,7 +42,7 @@ class HomeController < ApplicationController
 
     return render 'report' unless hidden_field_valid?
 
-    if captcha_valid? @report && @report.save
+    if captcha_valid?(@report) && @report.save
       fork do
         Notifications.guarantee_report(@report).deliver
       end
@@ -57,7 +57,7 @@ class HomeController < ApplicationController
     @report_type = false
 
     return render 'report' unless hidden_field_valid?
-    if captcha_valid? @report && @report.save
+    if captcha_valid?(@report) && @report.save
       fork do
         Notifications.postguarantee_report(@report).deliver
       end

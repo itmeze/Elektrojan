@@ -1,4 +1,8 @@
+<p>
+  Wyświetlane do 30 ostatnich rekordów
+</p>
 <table class="admin">
+  <th>TYP</th>
   <th>DATA ZGŁOSZENIA</th>
   <th>IMIĘ i NAZWISKO</th>
   <th>ADRES</th>
@@ -8,6 +12,7 @@
   <th class="male">USUŃ REKORD</th>
   <% @elements.each_with_index do |e, i| %>
   <tr class="<%= i % 2 == 0 ? 'parzysty' : '' %>">
+    <td><%= e.type_to_s %></td>
     <td><%= e.created_at.strftime('%d.%m.%Y') %></td>
     <td><%= e.name %></td>
     <td><%= e.address %></td>
