@@ -1,7 +1,6 @@
 #encoding: utf-8
 require 'spec_helper'
 require 'ruby-debug'
-#require 'rack/test'
 
 describe AdminController do
 
@@ -29,7 +28,7 @@ describe AdminController do
     response.status.should == 401
   end
 
-  it 'saves facotry item', :focus => true do
+  it 'saves factory item', :focus => true do
     Factory(:order)
 
     Order.all.size.should == 1
@@ -41,7 +40,7 @@ describe AdminController do
     #making sure it has a selector
     response.body.should have_selector('form input')
     #making sure all results are on the page
-    response.body.should have_selector("form select[name='type']")
+    response.body.should have_selector("form select[name='search_conditions[type]']")
   end
 
   it 'shows recent results when search' do
@@ -49,7 +48,7 @@ describe AdminController do
     5.times { Factory.create(:report) }
     1.times { Factory.create(:preport) }
 
-    visit_with_credentials '/admin/search'
+    post_with_credentials '/admin/search', {}
 
     Order.all.size.should == 8
     Guaranteereport.all.size.should == 5
@@ -60,7 +59,44 @@ describe AdminController do
     response.should be_success
   end
 
-  it 'shows up to 20 results based on creation date' do
+  it 'search saves condition to search' do
+    current_time = Time.now.strftime("%d/%m/%Y")
+    day_after_tomorrow = 2.days.since.strftime('%d/%m/%Y')
+
+    params = { :'search_conditions[q]' => 'artweger', :'search_conditions[from]' => current_time, :'search_conditions[to]' => day_after_tomorrow }
+
+    post_with_credentials "admin/search", params
+
+    query_conditions = session[:search]
+
+    query_conditions.should_not be_nil
+    query_conditions.type.should be_nil
+    query_conditions.q.should == 'artweger'
+    query_conditions.from.should == current_time
+    query_conditions.to.should == day_after_tomorrow
+
+  end
+
+  it 'loades query conditions from session if present' do
+
+    search_conditions = SearchConditions.new({ :type => 'order', :q => 'atrweger', :from => '28.10.2011' })
+    session_hash = Hash.new { search = search_conditions }
+
+    ApplicationController.stub(:session).and_return(session_hash)
+
+    debugger
+
+    visit_with_credentials '/admin'
+
+    query = assigns(:query)
+
+    query.type.should == 'order'
+    query.q.should == 'artweger'
+    query.from.should == '28.10.2011'
+
+  end
+
+  it 'shows up to 30 results based on creation date' do
     i = 1
     30.times do
       i += 1
@@ -71,10 +107,10 @@ describe AdminController do
 
     Order.all.size.should == 30
 
-    @recent = Order.order('created_at desc').limit(20)
+    @recent = Order.order('created_at desc').limit(30)
 
     assigns(:elements).should_not be_nil
-    assigns(:elements).size.should == 20
+    assigns(:elements).size.should == 30
 
     @recent.each do |e|
       assigns(:elements).find { |ce| ce.id == e.id }.should_not be_nil
@@ -87,7 +123,7 @@ describe AdminController do
     order3 = Factory(:order, :order_description => 'suszarka artweger')
     order4 = Factory(:order, :order_description => 'brak firmy')
 
-    visit_with_credentials 'admin/search?q=artweger'
+    post_with_credentials 'admin/search', { :'search_conditions[q]' => 'artweger' }
 
     assigns(:elements).size.should == 3
     assigns(:elements).find { |oe| oe.id == order1.id }.should_not be_nil
@@ -102,7 +138,7 @@ describe AdminController do
     guarantee1 = Factory(:report, :description => 'suszarka artweger')
     pguatantee1 = Factory(:preport, :description => 'costam artweger')
 
-    visit_with_credentials 'admin/search?q=artweger&type=order'
+    post_with_credentials 'admin/search', { :'search_conditions[q]' => 'artweger', :'search_conditions[type]' => 'order' }
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id }.should_not be_nil
@@ -122,7 +158,7 @@ describe AdminController do
     guarantee1 = Factory(:report, :description => 'suszarka artweger', :created_at => 1.day.since)
     pguatantee1 = Factory(:preport, :description => 'costam artweger', :created_at => 3.days.since)
 
-    visit_with_credentials "admin/search?q=artweger&from=#{current_time}"
+    post_with_credentials "admin/search", { :'search_conditions[q]' => 'artweger', :'search_conditions[from]' => current_time }
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil
@@ -130,7 +166,7 @@ describe AdminController do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should_not be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should_not be_nil
 
-    visit_with_credentials "admin/search?q=artweger&to=#{current_time}"
+    post_with_credentials "admin/search", { :'search_conditions[q]' => 'artweger', :'search_conditions[to]' => current_time }
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should_not be_nil
@@ -138,7 +174,8 @@ describe AdminController do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should be_nil
 
-    visit_with_credentials "admin/search?q=artweger&from=#{current_time}&to=#{day_after_tomorrow}"
+
+    post_with_credentials "admin/search", { :'search_conditions[q]' => 'artweger', :'search_conditions[from]' => current_time, :'search_conditions[to]' => day_after_tomorrow }
 
     assigns(:elements).size.should == 1
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil
@@ -157,7 +194,7 @@ describe AdminController do
     guarantee1 = Factory(:report, :description => 'suszarka artweger', :created_at => 1.day.since)
     pguatantee1 = Factory(:preport, :description => 'costam artweger', :created_at => 3.days.since)
 
-    visit_with_credentials "admin/search?q=artweger&from=#{current_time}"
+    post_with_credentials "admin/search", { :'search_conditions[q]' => 'artweger', :'search_conditions[from]' => current_time }
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil
@@ -165,7 +202,7 @@ describe AdminController do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should_not be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should_not be_nil
 
-    visit_with_credentials "admin/search?q=artweger&to=#{current_time}"
+    post_with_credentials "admin/search", { :'search_conditions[q]' => 'artweger', :'search_conditions[to]' => current_time }
 
     assigns(:elements).size.should == 2
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should_not be_nil
@@ -173,7 +210,7 @@ describe AdminController do
     assigns(:elements).find { |oe| oe.id == guarantee1.id && oe.instance_of?(Guaranteereport) }.should be_nil
     assigns(:elements).find { |oe| oe.id == pguatantee1.id && oe.instance_of?(Postguaranteereport) }.should be_nil
 
-    visit_with_credentials "admin/search?q=artweger&from=#{current_time}&to=#{day_after_tomorrow}"
+    post_with_credentials "admin/search", { :'search_conditions[q]' => 'artweger', :'search_conditions[from]' => current_time, :'search_conditions[to]' => day_after_tomorrow }
 
     assigns(:elements).size.should == 1
     assigns(:elements).find { |oe| oe.id == order1.id && oe.instance_of?(Order) }.should be_nil

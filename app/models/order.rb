@@ -19,7 +19,7 @@ class Order < ActiveRecord::Base
             :length => { :maximum => 256 }
   validates :order_description,
             :presence =>  { :message => 'Pole jest wymagane' },
-            :length => { :maximum => 256 }
+            :length => { :maximum => 4000 }
   def type_to_s
     "Zamówienie części"
   end

@@ -1,32 +1,26 @@
 <div class="inline">
-  <%= form_tag({ :action => 'search' }, { :remote => true, :id => 'search'}) do %>
+  <%= form_for @query, :url => { :action => 'search' }, :remote => true, :id => 'search' do |f| %>
     <div class="left ">
       <table>
         <tbody>
           <tr>
             <td>Wyświetl rekordy typu:</td>
             <td>
-              <select name="type">
-                <option value="">WSZYSTKIE</option>
-                <option value="guaranteereport">ZGŁOSZENIA GWARANCYJNE</option>
-                <option value="postguaranteereport">ZGŁOSZENIA POGWARANCYJNE</option>
-                <option value="order">ZAMOWIENIE CZĘŚCI</option>
-              </select>
+              <%= f.select :type, @types %>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="right">
-      <%= text_field_tag 'q', '', :class => 'watermark szukaj', :'-data-watermark' => 'wpisz szukaną fraze' %>
+      <%= f.text_field :q, :class => 'watermark szukaj', :'-data-watermark' => 'wpisz szukaną fraze' %>
     </div>
     <div class="right">
       <%= image_tag 'search.png', :class => 'search' %>
     </div>
     <div class="clearfix"></div>
 
-    Pokaż Zgłoszenia od dnia: <input class="data watermark datepicker" -data-watermark="od dnia" type="text" name="from" value="">
-    do dnia: <input class="data watermark datepicker" type="text" name="to" -data-watermark="do dnia" value="">
+    Pokaż Zgłoszenia od dnia: <%= f.text_field :from, :class => 'data watermark datepicker', :'-data-watermark' => "od dnia" %> do dnia: <%= f.text_field :to, :class => 'data watermark datepicker', :'-data-watermark' => "do dnia" %>
 
     <div class="clearfix"></div>
     <input type="submit" value="WYŚWIETL" />

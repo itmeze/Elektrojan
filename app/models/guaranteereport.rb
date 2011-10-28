@@ -20,7 +20,7 @@ class Guaranteereport < ActiveRecord::Base
   validates :rodzaj, :presence => { :message => 'Pole jest wymagane' }, :length => { :maximum => 256 }
   validates :description,
             :presence =>  { :message => 'Pole jest wymagane' },
-            :length => { :maximum => 256 }
+            :length => { :maximum => 4000 }
 
 
   def type_to_s

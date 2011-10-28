@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111005211652) do
+ActiveRecord::Schema.define(:version => 20111028204549) do
 
   create_table "guaranteereports", :force => true do |t|
     t.string   "name"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20111005211652) do
     t.string   "purchase_guarantee_id"
     t.string   "rodzaj"
     t.string   "pin"
-    t.string   "description"
+    t.string   "description",           :limit => 4000
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20111005211652) do
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
-    t.string   "order_description"
+    t.string   "order_description", :limit => 4000
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comment"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20111005211652) do
     t.string   "email"
     t.string   "producer"
     t.string   "rodzaj"
-    t.string   "description"
+    t.string   "description", :limit => 4000
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"

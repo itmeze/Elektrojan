@@ -1,32 +1,47 @@
 #encoding: utf-8
+require 'search_conditions'
+
 class AdminController < ApplicationController
   http_basic_authenticate_with :name => MyConfiguration.admin_username, :password => MyConfiguration.admin_password
+  before_filter :fill_common_data
+
+  def fill_common_data
+    @types = [
+                ["WSZYSTKIE", nil],
+                ["Zamówienie części", 'order'],
+                ["Zgłoszenie gwarancyjne", "guarantee"],
+                ["Zgłoszenie pogwarancyjne", "postguarantee"]
+             ]
+  end
 
   def index
+    if params[:reload].nil? && session[:search].present?
+      @query = session[:search]
+    end
+    @query ||= SearchConditions.new
   end
 
   def search
 
-    type = params[:type]
-    q = params[:q]
-    from = params[:from]
-    to = params[:to]
+    search = SearchConditions.new params[:search_conditions]
+
+    session[:search] = search
 
     @elements = Array.new
 
-    unless (type.present? && type != 'order')
-      Order.search(q).after(from).before(to).each { |p| @elements << p }
+    unless (search.type.present? && search.type != 'order')
+      Order.search(search.q).after(search.from).before(search.to).each { |p| @elements << p }
     end
 
-    unless (type.present? && type != 'guarantee')
-      Guaranteereport.search(q).after(from).before(to).each { |p| @elements << p  }
+    unless (search.type.present? && search.type != 'guarantee')
+      Guaranteereport.search(search.q).after(search.from).before(search.to).each { |p| @elements << p  }
     end
 
-    unless (type.present? && type != 'postguarantee')
-      Postguaranteereport.search(q).after(from).before(to).each { |p| @elements << p }
+    unless (search.type.present? && search.type != 'postguarantee')
+      Postguaranteereport.search(search.q).after(search.from).before(search.to).each { |p| @elements << p }
     end
 
-    @elements = @elements.sort{ |a, b| b.created_at <=> a.created_at }.take(20)
+    @elements = @elements.sort{ |a, b| b.created_at <=> a.created_at }.take(30)
 
     render :layout => false
   end
